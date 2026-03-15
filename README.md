@@ -1,4 +1,4 @@
-# Quasar App (gestao-encomenda)
+# Quasar App (gestao-encomendas)
 
 A Quasar Project
 

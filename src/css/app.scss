@@ -1,1 +1,348 @@
-// app global css in SCSS form
+// Jacque Festas — Global Styles
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+// ---- Base ----
+body {
+  font-family: 'Poppins', sans-serif;
+}
+input, textarea, select, button {
+  font-family: inherit;
+}
+body, .q-page {
+  background-color: #FFF8F5;
+}
+
+// ---- Page background ----
+.q-page {
+  background: #FFF8F5;
+}
+
+// ---- Header ----
+.jf-header {
+  background: linear-gradient(135deg, #FF6B2C 0%, #FF8C42 100%);
+  box-shadow: 0 4px 20px rgba(255, 107, 44, 0.3);
+}
+
+.jf-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .jf-logo-placeholder {
+    width: 42px;
+    height: 42px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 800;
+    color: white;
+    letter-spacing: -1px;
+    border: 2px solid rgba(255,255,255,0.4);
+  }
+
+  .jf-brand-name {
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+
+    .jf-brand-sub {
+      font-size: 11px;
+      font-weight: 400;
+      opacity: 0.85;
+      display: block;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+  }
+}
+
+// ---- Product Cards ----
+.product-card {
+  border-radius: 16px !important;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: none !important;
+  box-shadow: 0 2px 12px rgba(44, 26, 14, 0.08) !important;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(255, 107, 44, 0.18) !important;
+  }
+}
+
+// ---- Selection Cards (flavor, topper, etc.) ----
+.selection-card {
+  border-radius: 12px !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07) !important;
+
+  &:hover {
+    border-color: rgba(255, 107, 44, 0.4) !important;
+    box-shadow: 0 4px 16px rgba(255, 107, 44, 0.15) !important;
+  }
+
+  &.selected {
+    border-color: #FF6B2C !important;
+    background: rgba(255, 107, 44, 0.04) !important;
+    box-shadow: 0 4px 16px rgba(255, 107, 44, 0.2) !important;
+  }
+}
+
+// ---- Pill Buttons (size/qty selectors) ----
+.pill-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  .pill-btn {
+    border-radius: 50px !important;
+    padding: 6px 18px !important;
+    font-weight: 600;
+    font-size: 14px;
+    border: 2px solid #e0d5cf !important;
+    background: white !important;
+    color: #2C1A0E !important;
+    transition: all 0.15s ease;
+    cursor: pointer;
+
+    &:hover {
+      border-color: #FF6B2C !important;
+      color: #FF6B2C !important;
+    }
+
+    &.active {
+      background: #FF6B2C !important;
+      border-color: #FF6B2C !important;
+      color: white !important;
+      box-shadow: 0 3px 12px rgba(255, 107, 44, 0.35);
+    }
+  }
+}
+
+// ---- Price Preview Block ----
+.price-preview {
+  background: linear-gradient(135deg, rgba(255, 107, 44, 0.08), rgba(255, 154, 92, 0.05));
+  border: 1.5px solid rgba(255, 107, 44, 0.2);
+  border-radius: 14px;
+  padding: 14px 18px;
+
+  .price-label {
+    font-size: 13px;
+    color: #6B4C3B;
+    font-weight: 500;
+  }
+
+  .price-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #FF6B2C;
+  }
+}
+
+// ---- Cart Section ----
+.cart-section {
+  background: linear-gradient(135deg, #FFF3EE, #FFF8F5);
+  border: 1.5px solid rgba(255, 107, 44, 0.15);
+  border-radius: 20px;
+}
+
+.cart-item-card {
+  border-radius: 12px !important;
+  border: 1px solid rgba(255, 107, 44, 0.12) !important;
+  box-shadow: none !important;
+}
+
+// ---- Footer ----
+.jf-footer {
+  background: white;
+  border-top: 1px solid rgba(255, 107, 44, 0.15);
+  box-shadow: 0 -4px 20px rgba(44, 26, 14, 0.08);
+  padding: 12px 16px;
+}
+
+// ---- Stepper Dialog ----
+.stepper-header {
+  background: white;
+  border-bottom: 1px solid rgba(255, 107, 44, 0.1);
+  padding: 12px 16px;
+}
+
+.stepper-footer {
+  background: white;
+  border-top: 1px solid rgba(255, 107, 44, 0.1);
+  padding: 12px 16px;
+}
+
+.step-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #e0d5cf;
+  transition: all 0.3s ease;
+
+  &.active {
+    background: #FF6B2C;
+    width: 24px;
+    border-radius: 5px;
+  }
+
+  &.completed {
+    background: #FF9A5C;
+  }
+}
+
+// ---- Topper Cards ----
+.topper-card {
+  border-radius: 12px !important;
+  cursor: pointer;
+  border: 2px solid transparent !important;
+  transition: all 0.2s ease;
+
+  img {
+    border-radius: 10px;
+  }
+
+  &:hover { border-color: rgba(255,107,44,0.4) !important; }
+  &.selected {
+    border-color: #FF6B2C !important;
+    box-shadow: 0 4px 16px rgba(255,107,44,0.25) !important;
+  }
+}
+
+// ---- Photo Thumbnails ----
+.photo-thumb {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 107, 44, 0.2);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .remove-btn {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 20px;
+    height: 20px;
+    background: rgba(229,57,53,0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+    color: white;
+  }
+}
+
+// ---- Summary Card ----
+.summary-card {
+  border-radius: 16px !important;
+  border: 1.5px solid rgba(255, 107, 44, 0.15) !important;
+  box-shadow: 0 4px 20px rgba(255, 107, 44, 0.08) !important;
+}
+
+// ---- Slide transitions ----
+.slide-left-enter-active,
+.slide-left-leave-active,
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-left-enter-from { transform: translateX(60px); opacity: 0; }
+.slide-left-leave-to   { transform: translateX(-60px); opacity: 0; }
+.slide-right-enter-from { transform: translateX(-60px); opacity: 0; }
+.slide-right-leave-to   { transform: translateX(60px); opacity: 0; }
+
+// ---- WhatsApp green ----
+.btn-whatsapp {
+  background: #25D366 !important;
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+// ---- QInput override ----
+.q-field--outlined .q-field__control {
+  border-radius: 12px !important;
+}
+
+// ---- Type cards (Kit pronto / Do zero) ----
+.type-card {
+  border-radius: 16px !important;
+  border: 2.5px solid #e0d5cf !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  padding: 24px 16px;
+
+  .type-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+  }
+
+  &:hover {
+    border-color: #FF9A5C !important;
+    box-shadow: 0 4px 20px rgba(255, 107, 44, 0.12) !important;
+  }
+
+  &.selected {
+    border-color: #FF6B2C !important;
+    background: rgba(255, 107, 44, 0.04) !important;
+    box-shadow: 0 6px 24px rgba(255, 107, 44, 0.2) !important;
+  }
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2C1A0E;
+}
+
+.section-subtitle {
+  font-size: 14px;
+  color: #6B4C3B;
+}
+
+// ---- Correções Globais de Responsividade ----
+.text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 380px) {
+  /* Botões nativos e Stepper Buttons */
+  .q-btn {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+  /* Botões Pílula */
+  .pill-group {
+    gap: 6px;
+    .pill-btn {
+      padding: 6px 12px !important;
+      font-size: 12px;
+    }
+  }
+  /* Quadro de Preview e Total */
+  .price-preview {
+    padding: 10px 14px;
+    .price-label { font-size: 12px; line-height: 1.2; padding-bottom: 2px; }
+    .price-value { font-size: 18px; }
+  }
+  .section-title { font-size: 18px; }
+}

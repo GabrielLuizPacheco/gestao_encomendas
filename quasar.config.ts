@@ -116,7 +116,7 @@ export default defineConfig((ctx) => {
       // directives: [],
 
       // Quasar plugins
-      plugins: [],
+      plugins: ['Notify', 'Dialog'],
     },
 
     // animations: 'all', // --- includes all animations
@@ -212,7 +212,7 @@ export default defineConfig((ctx) => {
       builder: {
         // https://www.electron.build/configuration
 
-        appId: 'gestao-encomenda',
+        appId: 'gestao-encomendas',
       },
     },
 

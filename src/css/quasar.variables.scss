@@ -1,25 +1,20 @@
 // Quasar SCSS (& Sass) Variables
 // --------------------------------------------------
-// To customize the look and feel of this app, you can override
-// the Sass/SCSS variables found in Quasar's source Sass/SCSS files.
+// Jacque Festas — Tema Laranja & Branco
+// --------------------------------------------------
 
-// Check documentation for full list of Quasar variables
+// Cores principais da marca
+$primary   : #FF6B2C;   // Laranja vibrante (marca Jacque Festas)
+$secondary : #FF9A5C;   // Laranja claro (destaques suaves)
+$accent    : #FF3D00;   // Laranja intenso (calls-to-action)
 
-// Your own variables (that are declared here) and Quasar's own
-// ones will be available out of the box in your .vue/.scss/.sass files
+$dark      : #2C1A0E;   // Marrom escuro (texto principal)
+$dark-page : #1A0D05;
 
-// It's highly recommended to change the default colors
-// to match your app's branding.
-// Tip: Use the "Theme Builder" on Quasar's documentation website.
+$positive  : #25D366;   // Verde WhatsApp (botão de envio)
+$negative  : #E53935;   // Vermelho (remover, erros)
+$info      : #FF9800;   // Âmbar laranja (informações)
+$warning   : #FFA000;   // Âmbar (avisos)
 
-$primary: #1976d2;
-$secondary: #26a69a;
-$accent: #9c27b0;
-
-$dark: #1d1d1d;
-$dark-page: #121212;
-
-$positive: #21ba45;
-$negative: #c10015;
-$info: #31ccec;
-$warning: #f2c037;
+// Cor de fundo suave da página
+$page-bg   : #FFF8F5;   // Branco levemente quente
