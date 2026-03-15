@@ -9,7 +9,7 @@
   >
     <q-card
       class="column no-wrap"
-      :style="$q.screen.gt.xs ? 'max-width: 600px; width: 100%; border-radius: 24px; max-height: 90vh' : 'height: 100vh; border-radius: 0'"
+      :style="$q.screen.gt.xs ? 'max-width: 600px; width: 100%; border-radius: 24px; max-height: 90vh' : 'height: 100%; border-radius: 0'"
     >
       <!-- Barra superior -->
       <div class="stepper-header row items-center no-wrap">
