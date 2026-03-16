@@ -43,9 +43,23 @@ export interface FlavorGroup {
   flavorId: number | null
 }
 
+export interface ReadyKit {
+  id: number
+  name: string
+  description: string
+  price: number
+  image: string
+  items: {
+    cake: { flavor: string; weight: string }
+    savories: { qty: number; flavors: string }
+    sweets: { qty: number; flavors: string }
+  }
+}
+
 export interface FlowState {
   product: Product
   orderType: OrderType | null
+  selectedReadyKit: ReadyKit | null
   cakeFlavor: CakeFlavor | null
   cakeWeightKg: number | null
   cakeMass: CakeMass | null
@@ -56,6 +70,7 @@ export interface FlowState {
   themeType: ThemeType | null
   topper: Topper | null
   hasCandle: boolean
+  candleAge: number | null
   topperMessage: string
   personalPhotos: File[]
   customThemeImg: File | null

@@ -10,6 +10,9 @@ function generateId(): string {
 
 function buildSummary(flow: FlowState): string {
   const parts: string[] = []
+  if (flow.selectedReadyKit) {
+    parts.push(`Kit: ${flow.selectedReadyKit.name}`)
+  }
   if (flow.cakeFlavor && flow.cakeWeightKg) {
     parts.push(`${flow.cakeFlavor.name} ${flow.cakeWeightKg}kg`)
   }
@@ -20,9 +23,12 @@ function buildSummary(flow: FlowState): string {
     parts.push(`${flow.sweetQty} docinhos`)
   }
   if (flow.themeType === 'pronto' && flow.topper) {
-    parts.push(`Tema pronto`)
+    parts.push(`Topper: ${flow.topper.name}`)
   } else if (flow.themeType === 'personalizado') {
-    parts.push(`Tema personalizado`)
+    parts.push(`Tema pers.`)
+  }
+  if (flow.hasCandle) {
+    parts.push(`Vela (${flow.candleAge}a)`)
   }
   return parts.join(' • ') || flow.product.name
 }
@@ -31,6 +37,7 @@ function createEmptyFlow(product: Product): FlowState {
   return {
     product,
     orderType: null,
+    selectedReadyKit: null,
     cakeFlavor: null,
     cakeWeightKg: null,
     cakeMass: null,
@@ -41,6 +48,7 @@ function createEmptyFlow(product: Product): FlowState {
     themeType: null,
     topper: null,
     hasCandle: false,
+    candleAge: null,
     topperMessage: '',
     personalPhotos: [],
     customThemeImg: null,

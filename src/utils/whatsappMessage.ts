@@ -2,7 +2,7 @@
 // Jacque Festas — WhatsApp Message Builder
 // =====================================================
 import { formatCurrency } from './formatters'
-import { savoryFlavors, sweetFlavors } from 'src/data/mockData'
+import { savoryFlavors, sweetFlavors, TOPPER_PRICE } from 'src/data/mockData'
 import type { OrderItem } from 'src/types'
 
 const WHATSAPP_NUMBER = '5511948026955'
@@ -22,6 +22,15 @@ function buildItemBlock(index: number, item: OrderItem): string {
   const lines: string[] = []
 
   lines.push(`*${index}. ${flow.product.name}*`)
+
+  // Kit Pronto
+  if (flow.selectedReadyKit) {
+    const k = flow.selectedReadyKit
+    lines.push(`• Kit Selecionado: *${k.name}*`)
+    lines.push(`  - Bolo: ${k.items.cake.flavor} (${k.items.cake.weight})`)
+    lines.push(`  - Salgados: ${k.items.savories.qty} (${k.items.savories.flavors})`)
+    lines.push(`  - Docinhos: ${k.items.sweets.qty} (${k.items.sweets.flavors})`)
+  }
 
   // Bolo
   if (flow.cakeFlavor && flow.cakeWeightKg) {
@@ -47,16 +56,23 @@ function buildItemBlock(index: number, item: OrderItem): string {
 
   // Tema
   if (flow.themeType === 'pronto' && flow.topper) {
-    lines.push(`• Tema: Pronto — Topper ${flow.topper.name}`)
+    lines.push(`• Tema: Pronto — Topper ${flow.topper.name} (${formatCurrency(TOPPER_PRICE)})`)
   } else if (flow.themeType === 'personalizado') {
     lines.push(`• Tema: Personalizado`)
     if (flow.customThemeDesc) {
       lines.push(`  Descrição: ${flow.customThemeDesc}`)
     }
+    if (flow.customThemeImg) {
+      lines.push(`  📍 _[Imagem de referência anexada pelo cliente]_`)
+    }
   }
 
   // Vela
-  lines.push(`• Vela: ${flow.hasCandle ? `Sim — ${formatCurrency(5)}` : 'Não'}`)
+  if (flow.hasCandle) {
+    lines.push(`• Vela: Sim (${flow.candleAge ?? 1} ${flow.candleAge === 1 ? 'mês/ano' : 'anos'}) — ${formatCurrency(15)}`)
+  } else {
+    lines.push(`• Vela: Não`)
+  }
 
   // Mensagem/topper
   if (flow.topperMessage) {
@@ -66,8 +82,9 @@ function buildItemBlock(index: number, item: OrderItem): string {
   // Fotos pessoais
   if (flow.personalPhotos.length > 0) {
     lines.push(
-      `• Fotos pessoais: ${flow.personalPhotos.length} foto(s) — ${formatCurrency(flow.personalPhotos.length * 8)}`
+      `• Fotos para impressão: ${flow.personalPhotos.length} foto(s) — ${formatCurrency(flow.personalPhotos.length * 8)}`
     )
+    lines.push(`  ⚠️ _[O cliente deve enviar os arquivos a seguir]_`)
   }
 
   lines.push(`*Subtotal: ${formatCurrency(finalPrice)}*`)

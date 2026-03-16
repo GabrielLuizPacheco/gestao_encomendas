@@ -1,7 +1,7 @@
 // =====================================================
 // Jacque Festas — Price Calculator
 // =====================================================
-import { cakeFlavors, savoryPrices, sweetPrices, PHOTO_PRICE, CANDLE_PRICE } from 'src/data/mockData'
+import { cakeFlavors, savoryPrices, sweetPrices, PHOTO_PRICE, CANDLE_PRICE, TOPPER_PRICE } from 'src/data/mockData'
 import type { FlowState } from 'src/types'
 
 /**
@@ -69,6 +69,11 @@ export function calcCandlePrice(hasCandle: boolean): number {
 export function calcItemTotal(flow: Partial<FlowState>): number {
   let total = 0
 
+  // Kit Pronto (se existir, o preço base vem dele)
+  if (flow.selectedReadyKit) {
+    total += flow.selectedReadyKit.price
+  }
+
   // Bolo
   if (flow.cakeFlavor && flow.cakeWeightKg) {
     total += calcCakePrice(flow.cakeFlavor.id, flow.cakeWeightKg)
@@ -92,6 +97,11 @@ export function calcItemTotal(flow: Partial<FlowState>): number {
   // Vela
   if (flow.hasCandle) {
     total += calcCandlePrice(true)
+  }
+
+  // Topper
+  if (flow.topper) {
+    total += TOPPER_PRICE
   }
 
   return total

@@ -60,10 +60,22 @@
     <!-- Vela -->
     <q-toggle
       :model-value="modelCandle"
-      label="Adicionar vela? (+R$ 5,00) 🕯️"
+      label="Adicionar vela? (+R$ 15,00) 🕯️"
       color="primary"
-      class="q-mb-md"
+      class="q-mb-sm"
       @update:model-value="$emit('update:modelCandle', $event)"
+    />
+
+    <q-input
+      v-if="modelCandle"
+      :model-value="modelCandleAge"
+      type="number"
+      outlined
+      dense
+      label="Qual a idade ou mês na vela?"
+      class="q-mb-md animate__animated animate__fadeIn"
+      style="max-width: 200px"
+      @update:model-value="$emit('update:modelCandleAge', $event ? parseInt($event as string) : null)"
     />
 
     <!-- Mensagem para topper -->
@@ -127,6 +139,7 @@ import PricePreview from 'src/components/PricePreview.vue'
 const props = defineProps<{
   modelTopper: Topper | null
   modelCandle: boolean
+  modelCandleAge: number | null
   modelMessage: string
   modelPhotos: File[]
   totalPrice: number
@@ -136,6 +149,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   'update:modelTopper': [v: Topper]
   'update:modelCandle': [v: boolean]
+  'update:modelCandleAge': [v: number | null]
   'update:modelMessage': [v: string]
   'update:modelPhotos': [v: File[]]
 }>()

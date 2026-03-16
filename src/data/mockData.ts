@@ -1,7 +1,7 @@
 // =====================================================
 // Jacque Festas — Mock Data
 // =====================================================
-import type { Product, CakeFlavor, SnackFlavor, Topper } from 'src/types'
+import type { Product, CakeFlavor, SnackFlavor, Topper, ReadyKit } from 'src/types'
 
 // ---- Produtos ----
 export const products: Product[] = [
@@ -124,6 +124,46 @@ export const toppers: Topper[] = [
   { id: 13, name: 'Balões',         image: 'https://via.placeholder.com/200x200/26C6DA/FFFFFF?text=Balões', gender: 'neutro' },
 ]
 
+// ---- Kits Prontos ----
+export const readyKits: ReadyKit[] = [
+  {
+    id: 1,
+    name: 'Kit Escolha Certa',
+    description: 'Ideal para pequenas reuniões. Prático e saboroso.',
+    price: 159.90,
+    image: 'https://via.placeholder.com/400x300/FF6B2C/FFFFFF?text=Kit+Escolha+Certa',
+    items: {
+      cake: { flavor: 'Chocolate', weight: '1.5kg' },
+      savories: { qty: 50, flavors: 'Coxinha e Bolinha de Queijo' },
+      sweets: { qty: 25, flavors: 'Brigadeiro e Beijinho' }
+    }
+  },
+  {
+    id: 2,
+    name: 'Kit Super Festa',
+    description: 'O preferido! Completo para uma festa inesquecível.',
+    price: 249.90,
+    image: 'https://via.placeholder.com/400x300/FF9A5C/FFFFFF?text=Kit+Super+Festa',
+    items: {
+      cake: { flavor: 'Morango com Ninho', weight: '2.5kg' },
+      savories: { qty: 100, flavors: 'Misto de Salgados' },
+      sweets: { qty: 50, flavors: 'Brigadeiro, Beijinho e Cajuzinho' }
+    }
+  },
+  {
+    id: 3,
+    name: 'Kit Mega Comemoração',
+    description: 'Para grandes momentos. Abundância e variedade.',
+    price: 389.90,
+    image: 'https://via.placeholder.com/400x300/FFB870/FFFFFF?text=Kit+Mega',
+    items: {
+      cake: { flavor: 'Red Velvet', weight: '3.5kg' },
+      savories: { qty: 150, flavors: 'Mix Completo Premium' },
+      sweets: { qty: 100, flavors: 'Seleção Gourmet de Doces' }
+    }
+  }
+]
+
 // ---- Tabelas de Preço ----
 export const savoryPrices: Record<number, number> = {
   25: 45,
@@ -140,4 +180,5 @@ export const sweetPrices: Record<number, number> = {
 }
 
 export const PHOTO_PRICE = 8
-export const CANDLE_PRICE = 5
+export const CANDLE_PRICE = 15
+export const TOPPER_PRICE = 10

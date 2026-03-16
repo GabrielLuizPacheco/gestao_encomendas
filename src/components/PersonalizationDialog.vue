@@ -85,12 +85,13 @@ import StepCakeFlavorA1 from 'src/components/steps/StepCakeFlavorA1.vue'
 import StepCakeSizeA2 from 'src/components/steps/StepCakeSizeA2.vue'
 import StepSnackBase from 'src/components/steps/StepSnackBase.vue'
 import StepThemeTypeA5 from 'src/components/steps/StepThemeTypeA5.vue'
+import StepReadyKitSelectionA05 from 'src/components/steps/StepReadyKitSelectionA05.vue'
 import StepReadyThemeA6A from 'src/components/steps/StepReadyThemeA6A.vue'
 import StepCustomThemeA6B from 'src/components/steps/StepCustomThemeA6B.vue'
 import StepSummaryFinal from 'src/components/steps/StepSummaryFinal.vue'
 import { savoryFlavors, sweetFlavors } from 'src/data/mockData'
 import { calcSavoryPrice, calcSweetPrice, calcItemTotal } from 'src/utils/priceCalculator'
-import type { OrderType, ThemeType, CakeFlavor, CakeMass, Topper, FlavorGroup } from 'src/types'
+import type { OrderType, ThemeType, CakeFlavor, CakeMass, Topper, FlavorGroup, ReadyKit } from 'src/types'
 
 const $q = useQuasar()
 const orderStore = useOrderStore()
@@ -130,6 +131,19 @@ const steps = computed<StepDef[]>(() => {
       },
       canContinue: () => !!f.orderType,
     })
+
+    // A0.5 — Seleção de Kit (se o tipo for pronto)
+    if (f.orderType === 'pronto') {
+      allSteps.push({
+        key: 'A05',
+        component: StepReadyKitSelectionA05,
+        props: { modelValue: f.selectedReadyKit },
+        events: {
+          'update:modelValue': (v: ReadyKit) => orderStore.updateFlow({ selectedReadyKit: v }),
+        },
+        canContinue: () => !!f.selectedReadyKit,
+      })
+    }
   }
 
   // A1 — Sabor do bolo (se não é kit pronto e (party ou bolo))
@@ -225,6 +239,7 @@ const steps = computed<StepDef[]>(() => {
         props: {
           modelTopper: f.topper,
           modelCandle: f.hasCandle,
+          modelCandleAge: f.candleAge,
           modelMessage: f.topperMessage,
           modelPhotos: f.personalPhotos,
           totalPrice: totalPrice.value,
@@ -233,10 +248,11 @@ const steps = computed<StepDef[]>(() => {
         events: {
           'update:modelTopper': (v: Topper) => orderStore.updateFlow({ topper: v }),
           'update:modelCandle': (v: boolean) => orderStore.updateFlow({ hasCandle: v }),
+          'update:modelCandleAge': (v: number | null) => orderStore.updateFlow({ candleAge: v }),
           'update:modelMessage': (v: string) => orderStore.updateFlow({ topperMessage: v }),
           'update:modelPhotos': (v: File[]) => orderStore.updateFlow({ personalPhotos: v }),
         },
-        canContinue: () => !!f.topper,
+        canContinue: () => !!f.topper && (!f.hasCandle || (f.candleAge !== null && f.candleAge > 0)),
       })
     } else {
       allSteps.push({
@@ -244,6 +260,7 @@ const steps = computed<StepDef[]>(() => {
         component: StepCustomThemeA6B,
         props: {
           modelCandle: f.hasCandle,
+          modelCandleAge: f.candleAge,
           modelMessage: f.topperMessage,
           modelThemeImg: f.customThemeImg,
           modelPhotos: f.personalPhotos,
@@ -251,11 +268,12 @@ const steps = computed<StepDef[]>(() => {
         },
         events: {
           'update:modelCandle': (v: boolean) => orderStore.updateFlow({ hasCandle: v }),
+          'update:modelCandleAge': (v: number | null) => orderStore.updateFlow({ candleAge: v }),
           'update:modelMessage': (v: string) => orderStore.updateFlow({ topperMessage: v }),
           'update:modelThemeImg': (v: File | null) => orderStore.updateFlow({ customThemeImg: v }),
           'update:modelPhotos': (v: File[]) => orderStore.updateFlow({ personalPhotos: v }),
         },
-        canContinue: () => true, // todos campos opcionais
+        canContinue: () => !f.hasCandle || (f.candleAge !== null && f.candleAge > 0), // todos campos opcionais exceto idade da vela se marcada
       })
     }
   }
@@ -317,9 +335,11 @@ function goNext() {
     return
   }
   transitionName.value = 'slide-left'
-  // Pular A6B se tema pronto selecionado e vice-versa
+  // Pular passos baseados no tipo de pedido
   const nextRaw = currentStepIndex.value + 1
   const nextStep = steps.value[nextRaw]
+  
+  // Pular temas que não combinam com a escolha do usuário
   if (
     (nextStep?.key === 'A6A' && flow.value?.themeType === 'personalizado') ||
     (nextStep?.key === 'A6B' && flow.value?.themeType === 'pronto')

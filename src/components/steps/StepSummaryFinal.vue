@@ -10,6 +10,20 @@
         </div>
 
         <q-list dense class="q-pa-none">
+          <!-- Kit Pronto -->
+          <q-item v-if="flow.selectedReadyKit" class="q-pa-none q-mb-sm">
+            <q-item-section avatar>
+              <q-icon name="inventory_2" color="primary" size="sm" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label caption>Kit Selecionado</q-item-label>
+              <q-item-label class="text-weight-bold">{{ flow.selectedReadyKit.name }}</q-item-label>
+            </q-item-section>
+            <q-item-section side>
+              <span style="color: #FF6B2C; font-weight: 600">{{ formatCurrency(flow.selectedReadyKit.price) }}</span>
+            </q-item-section>
+          </q-item>
+
           <!-- Bolo -->
           <q-item v-if="flow.cakeFlavor && flow.cakeWeightKg" class="q-pa-none q-mb-xs">
             <q-item-section avatar>
@@ -66,6 +80,9 @@
                 {{ flow.themeType === 'pronto' ? `Pronto — ${flow.topper?.name ?? ''}` : 'Personalizado' }}
               </q-item-label>
             </q-item-section>
+            <q-item-section v-if="flow.themeType === 'pronto'" side>
+              <span style="color: #FF6B2C; font-weight: 600">{{ formatCurrency(TOPPER_PRICE) }}</span>
+            </q-item-section>
           </q-item>
 
           <!-- Vela -->
@@ -75,10 +92,10 @@
             </q-item-section>
             <q-item-section>
               <q-item-label caption>Vela</q-item-label>
-              <q-item-label>{{ flow.hasCandle ? 'Sim' : 'Não' }}</q-item-label>
+              <q-item-label>{{ flow.hasCandle ? `Sim (Idade: ${flow.candleAge})` : 'Não' }}</q-item-label>
             </q-item-section>
             <q-item-section v-if="flow.hasCandle" side>
-              <span style="color: #FF6B2C; font-weight: 600">{{ formatCurrency(5) }}</span>
+              <span style="color: #FF6B2C; font-weight: 600">{{ formatCurrency(15) }}</span>
             </q-item-section>
           </q-item>
 
@@ -100,7 +117,7 @@
             </q-item-section>
             <q-item-section>
               <q-item-label caption>Fotos pessoais</q-item-label>
-              <q-item-label>{{ flow.personalPhotos.length }} foto(s)</q-item-label>
+              <q-item-label>{{ flow.personalPhotos.length }} foto(s) • Anexas</q-item-label>
             </q-item-section>
             <q-item-section side>
               <span style="color: #FF6B2C; font-weight: 600">{{ formatCurrency(photosPrice) }}</span>
@@ -133,6 +150,7 @@ import {
   calcPhotosPrice,
   calcItemTotal,
 } from 'src/utils/priceCalculator'
+import { TOPPER_PRICE } from 'src/data/mockData'
 
 const props = defineProps<{ flow: FlowState }>()
 
@@ -146,3 +164,11 @@ const sweetPrice = computed(() => calcSweetPrice(props.flow.sweetQty))
 const photosPrice = computed(() => calcPhotosPrice(props.flow.personalPhotos.length))
 const total = computed(() => calcItemTotal(props.flow))
 </script>
+
+<style scoped>
+.summary-card {
+  border: 1.5px solid #FFEDDE;
+  border-radius: 16px;
+  background: #FFFBF9;
+}
+</style>
